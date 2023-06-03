@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5267549061963638748}
   - component: {fileID: 7902094744527121153}
   - component: {fileID: 2922658780211268093}
+  - component: {fileID: 3281158455472993647}
+  - component: {fileID: 5324031366647414278}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -274904885
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1517678253, guid: 6f2687093e02a1e41ad30f6444b88eaf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -194,7 +196,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8ef4f10107a69499644806d8ba5437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+--- !u!114 &3281158455472993647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914800479058567749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8f819a723e42746a4e611e3d99a3aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  baseAttack:
+    baseValue: 0
+  moveSpeed:
+    baseValue: 4
+--- !u!114 &5324031366647414278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914800479058567749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dccf9f18792196489763264d4cf5a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrust: 0
 --- !u!1 &3536101683086726572
 GameObject:
   m_ObjectHideFlags: 0
