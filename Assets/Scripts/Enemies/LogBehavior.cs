@@ -31,7 +31,7 @@ public class LogBehavior : Enemy
         if (Vector3.Distance(target.position, transform.position) <= chaseRadius
             && Vector3.Distance(target.position, transform.position) > attackRadius)
         {
-            WakeUp();
+            //WakeUp();
             transform.position = Vector3.MoveTowards(transform.position, target.position, stats.moveSpeed.GetValue() * Time.deltaTime);
             animator.SetFloat("moveX", transform.position.x);
             animator.SetFloat("moveY", transform.position.y);
