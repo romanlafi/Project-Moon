@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class LogBehavior : Enemy
 {
@@ -27,7 +24,6 @@ public class LogBehavior : Enemy
 
     void CheckDistance()
     {
-
         if (Vector3.Distance(target.position, transform.position) <= chaseRadius
             && Vector3.Distance(target.position, transform.position) > attackRadius)
         {

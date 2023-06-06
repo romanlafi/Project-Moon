@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PotBehavior : MonoBehaviour
@@ -12,12 +11,6 @@ public class PotBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Hit()
     {
         animator.SetBool("hit", true);
@@ -28,5 +21,13 @@ public class PotBehavior : MonoBehaviour
     {
         yield return new WaitForSeconds(.33f);
         this.gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Hit();
+        } 
     }
 }

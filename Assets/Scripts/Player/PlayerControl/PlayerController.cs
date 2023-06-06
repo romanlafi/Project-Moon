@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions playerControls;
     private InputAction move;
     private InputAction attack;
+    private InputAction interact;
+
+    private Sign sign;
 
     private CharacterStats stats;
 
@@ -38,12 +40,17 @@ public class PlayerController : MonoBehaviour
         attack = playerControls.Player.Attack;
         attack.Enable();
         attack.performed += Attack;
+
+        interact = playerControls.Player.Interact;
+        interact.Enable();
+        interact.performed += Interact;
     }
 
     private void OnDisable() 
     {
         move.Disable();
         attack.Disable();
+        interact.Disable();
     }
 
     void Update()
@@ -70,6 +77,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Interact (InputAction.CallbackContext context)
+    {
+        if (sign != null)
+        {
+            sign.ShowDialog();
+        }
+    }
+
     private void Attack (InputAction.CallbackContext context)
     { 
         StartCoroutine(AttackCo());   
@@ -82,4 +97,22 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("attacking", false);
         yield return new WaitForSeconds(.33f);   
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Sign"))
+        {
+            sign = other.gameObject.GetComponent<Sign>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Sign"))
+        {
+            sign = null;
+        }
+    }
 }
+
+

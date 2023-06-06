@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnockBack : MonoBehaviour
@@ -11,7 +10,6 @@ public class KnockBack : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-           
             Rigidbody2D enemy = other.GetComponent<Rigidbody2D>();
 
             if (enemy != null)
