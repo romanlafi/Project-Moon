@@ -24,12 +24,16 @@ public class PlayerController : MonoBehaviour
 
     private CharacterStats stats;
 
+    private bool attacking;
+
     private void Awake() 
     {
         playerControls = new PlayerInputActions();
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         stats = GetComponent<CharacterStats>();
+
+        attacking = false;
     }
 
     private void OnEnable() 
@@ -55,7 +59,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attacking") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
+            attacking = true;
+        }
+        else
+        {
+            attacking = false;
+        }
+
+        if (!attacking) Move();
     }
 
     private void Move()
