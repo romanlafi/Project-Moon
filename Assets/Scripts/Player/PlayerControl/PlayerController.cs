@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 public enum PlayerState
 {
+    idle,
     walk,
     interact,
-    attack
+    attack,
+    stagger
 }
 
 public class PlayerController : MonoBehaviour
@@ -24,19 +26,19 @@ public class PlayerController : MonoBehaviour
 
     private CharacterStats stats;
 
-    private bool attacking;
+    public PlayerState currentState;
 
-    private void Awake() 
+    private void Awake () 
     {
         playerControls = new PlayerInputActions();
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         stats = GetComponent<CharacterStats>();
 
-        attacking = false;
+        currentState = PlayerState.walk;
     }
 
-    private void OnEnable() 
+    private void OnEnable () 
     {
         move = playerControls.Player.Move;
         move.Enable();
@@ -50,28 +52,30 @@ public class PlayerController : MonoBehaviour
         interact.performed += Interact;
     }
 
-    private void OnDisable() 
+    private void OnDisable () 
     {
         move.Disable();
         attack.Disable();
         interact.Disable();
     }
 
-    void Update()
+    void Update ()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attacking") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        if (currentState != PlayerState.stagger) 
         {
-            attacking = true;
+            Move();
         }
-        else
-        {
-            attacking = false;
-        }
-
-        if (!attacking) Move();
     }
 
-    private void Move()
+    public void ChangeState (PlayerState newState)
+    {
+        if (currentState != newState)
+        {
+            currentState = newState;
+        }
+    }
+
+    private void Move ()
     {
         moveDirection = move.ReadValue<Vector2>();
         moveDirection.Normalize();
@@ -99,19 +103,40 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Attack (InputAction.CallbackContext context)
-    { 
-        StartCoroutine(AttackCo());   
+    {
+        if (currentState != PlayerState.attack && currentState != PlayerState.stagger)
+        {
+            StartCoroutine(AttackCo());
+        } 
     }
 
-    private IEnumerator AttackCo()
+    private IEnumerator AttackCo ()
     {
+        ChangeState(PlayerState.attack);
         animator.SetBool("attacking", true);
         yield return null;
         animator.SetBool("attacking", false);
-        yield return new WaitForSeconds(.33f);   
+        yield return new WaitForSeconds(.33f);
+        ChangeState(PlayerState.walk);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Knock (float knockTime)
+    {
+        StartCoroutine(KnockCo(knockTime));
+    }
+
+    private IEnumerator KnockCo (float knockTime)
+    {
+        if (rigidBody != null)
+        {
+            yield return new WaitForSeconds(knockTime);
+            rigidBody.velocity = Vector2.zero;
+            ChangeState(PlayerState.walk);
+            rigidBody.velocity = Vector2.zero;
+        }
+    }
+
+    private void OnTriggerEnter2D (Collider2D other)
     {
         if (other.gameObject.CompareTag("Sign"))
         {
@@ -119,7 +144,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D (Collider2D other)
     {
         if (other.gameObject.CompareTag("Sign"))
         {

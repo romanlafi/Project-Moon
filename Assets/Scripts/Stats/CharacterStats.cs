@@ -13,7 +13,9 @@ public class CharacterStats : MonoBehaviour
     void Start ()
     {
         currentHealth = maxHealth;
-        //healthBar.SetMaxHealth(maxHealth);
+
+        if (healthBar != null) healthBar.SetMaxHealth(maxHealth);
+
     }
 
     public void TakeDamage (int damage)
@@ -21,7 +23,8 @@ public class CharacterStats : MonoBehaviour
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+
+        if (healthBar != null) healthBar.SetHealth(currentHealth);
 
         Debug.Log(transform.name + " takes " + damage + " damage");
 
@@ -33,6 +36,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void Die () 
     {
-        Debug.Log(transform.name + "died");
+        transform.gameObject.SetActive(false);
+        Debug.Log(transform.name + " died");
     }
 }
