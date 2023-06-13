@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,13 +17,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     private Animator animator;
     private Rigidbody2D rigidBody;
-    
+    private SpriteRenderer spriteRenderer;
+
     private PlayerInputActions playerControls;
     private InputAction move;
     private InputAction attack;
     private InputAction interact;
 
     private Sign sign;
+    private LampBehavior lamp;
 
     private CharacterStats stats;
 
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         stats = GetComponent<CharacterStats>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         currentState = PlayerState.walk;
     }
@@ -64,6 +68,11 @@ public class PlayerController : MonoBehaviour
         if (currentState != PlayerState.stagger) 
         {
             Move();
+        }
+
+        if (lamp != null)
+        {
+            AdjustOrderLayer();
         }
     }
 
@@ -99,6 +108,11 @@ public class PlayerController : MonoBehaviour
         if (sign != null)
         {
             sign.ShowDialog();
+        }
+
+        if (lamp != null)
+        {
+            lamp.Rest();
         }
     }
 
@@ -136,11 +150,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void AdjustOrderLayer ()
+    {
+        if (transform.position.y > lamp.transform.position.y)
+        {
+            spriteRenderer.sortingOrder = 0;
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = 2;
+        }
+    }
+
     private void OnTriggerEnter2D (Collider2D other)
     {
         if (other.gameObject.CompareTag("Sign"))
         {
             sign = other.gameObject.GetComponent<Sign>();
+        }
+
+        if (other.gameObject.CompareTag("Lamp"))
+        {
+            lamp = other.gameObject.GetComponent<LampBehavior>();
         }
     }
 
@@ -149,6 +180,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Sign"))
         {
             sign = null;
+        }
+
+        if (other.gameObject.CompareTag("Lamp"))
+        {
+            lamp = null;
         }
     }
 }
