@@ -8,6 +8,7 @@ public enum EnemyState
     attack,
     stagger
 }
+
 public class Enemy : MonoBehaviour
 {
     public string enemyName;

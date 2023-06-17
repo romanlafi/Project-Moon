@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,5 +14,19 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Quit!");
         Application.Quit();
+    }
+
+    public void SwitchMenu (GameObject targetMenu) 
+    {
+        if (targetMenu != null)
+        {
+            Button[] buttons = targetMenu.GetComponentsInChildren<Button>();
+
+            if (buttons.Length > 0)
+            {
+                buttons[0].Select();
+                buttons[0].OnSelect(null);
+            }
+        }
     }
 }

@@ -8,12 +8,12 @@ public class CameraMovement : MonoBehaviour
     public Vector2 maxPosition;
     public Vector2 minPosition;
 
-    private Camera camera;
+    //private Camera camera;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = GetComponent<Camera>();
+        //camera = GetComponent<Camera>();
     }
 
     // Update is called once per frame

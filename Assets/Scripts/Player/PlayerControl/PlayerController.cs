@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private Sign sign;
     private LampBehavior lamp;
 
+    private Transform otherTransform;
+
     private CharacterStats stats;
 
     public PlayerState currentState;
@@ -70,7 +72,7 @@ public class PlayerController : MonoBehaviour
             Move();
         }
 
-        if (lamp != null)
+        if (otherTransform != null)
         {
             AdjustOrderLayer();
         }
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void AdjustOrderLayer ()
     {
-        if (transform.position.y > lamp.transform.position.y)
+        if (transform.position.y > otherTransform.position.y)
         {
             spriteRenderer.sortingOrder = 0;
         }
@@ -164,6 +166,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D other)
     {
+        otherTransform = other.transform;
+
         if (other.gameObject.CompareTag("Sign"))
         {
             sign = other.gameObject.GetComponent<Sign>();
@@ -177,6 +181,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D (Collider2D other)
     {
+        otherTransform = null;
+
         if (other.gameObject.CompareTag("Sign"))
         {
             sign = null;

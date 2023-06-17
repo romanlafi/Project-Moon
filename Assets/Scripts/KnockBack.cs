@@ -8,9 +8,8 @@ public class KnockBack : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-
             Rigidbody2D otherRb = other.gameObject.GetComponent<Rigidbody2D>();
 
             if (otherRb != null)
@@ -19,23 +18,11 @@ public class KnockBack : MonoBehaviour
                 difference = difference.normalized * thrust;
                 otherRb.AddForce(difference, ForceMode2D.Impulse);
 
-                if (other.gameObject.CompareTag("Enemy"))
+                if (this.gameObject.GetComponent<Enemy>().currentState != EnemyState.stagger)
                 {
-                    int damage = GameObject.FindWithTag("Player").GetComponent<CharacterStats>().baseAttack.GetValue();
-
-                    otherRb.GetComponent<Enemy>().currentState = EnemyState.stagger;
-                    other.gameObject.GetComponent<Enemy>().Knock(otherRb, knockTime, damage);
-                }
-
-                if (other.gameObject.CompareTag("Player"))
-                {
-                    if (this.gameObject.GetComponent<Enemy>().currentState != EnemyState.stagger)
-                    {
-                        otherRb.GetComponent<PlayerController>().currentState = PlayerState.stagger;
-                        other.gameObject.GetComponent<PlayerController>().Knock(knockTime);
-                        other.gameObject.GetComponent<CharacterStats>().TakeDamage(this.gameObject.GetComponent<CharacterStats>().baseAttack.GetValue());
-                    }
-                  
+                    otherRb.GetComponent<PlayerController>().currentState = PlayerState.stagger;
+                    other.gameObject.GetComponent<PlayerController>().Knock(knockTime);
+                    other.gameObject.GetComponent<CharacterStats>().TakeDamage(this.gameObject.GetComponent<CharacterStats>().baseAttack.GetValue());
                 }
             }
         }

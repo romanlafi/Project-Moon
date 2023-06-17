@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 7902094744527121153}
   - component: {fileID: 2922658780211268093}
   - component: {fileID: 3281158455472993647}
-  - component: {fileID: 5324031366647414278}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -37,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 5584139388446267097}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9056086248456231177
 SpriteRenderer:
@@ -196,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8ef4f10107a69499644806d8ba5437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!114 &3281158455472993647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,22 +210,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 4
   baseAttack:
-    baseValue: 0
+    baseValue: 2
   moveSpeed:
     baseValue: 4
---- !u!114 &5324031366647414278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914800479058567749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dccf9f18792196489763264d4cf5a3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrust: 0
+  healthBar: {fileID: 0}
 --- !u!1 &3536101683086726572
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a37a7336c5c6a34ca8c48fc38bf921e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrust: 4
+  knockTime: 0.4
 --- !u!1 &4559480562477744826
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a37a7336c5c6a34ca8c48fc38bf921e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrust: 4
+  knockTime: 0.4
 --- !u!1 &7302696689674415944
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a37a7336c5c6a34ca8c48fc38bf921e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrust: 4
+  knockTime: 0.4
 --- !u!1 &8728337066505466336
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,3 +635,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a37a7336c5c6a34ca8c48fc38bf921e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrust: 4
+  knockTime: 0.4
