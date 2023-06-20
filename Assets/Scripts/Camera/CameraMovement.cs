@@ -8,15 +8,6 @@ public class CameraMovement : MonoBehaviour
     public Vector2 maxPosition;
     public Vector2 minPosition;
 
-    //private Camera camera;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //camera = GetComponent<Camera>();
-    }
-
-    // Update is called once per frame
     void LateUpdate()
     {
         if(transform.position != target.position)
@@ -33,7 +24,7 @@ public class CameraMovement : MonoBehaviour
                                           minPosition.y,
                                           maxPosition.y);
 
-            transform.position = Vector3.Lerp (transform.position,
+            transform.position = Vector3.Lerp(transform.position,
                                                targetPosition, 
                                                smoothing);
         }

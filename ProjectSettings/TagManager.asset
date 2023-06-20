@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Sign
   - Lamp
+  - NPC
   layers:
   - Default
   - TransparentFX

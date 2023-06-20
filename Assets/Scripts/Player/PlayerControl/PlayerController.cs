@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private InputAction attack;
     private InputAction interact;
 
+    private DialogueTrigger dialog;
+    private DialogueManager dialogueManager;
+
     private Sign sign;
     private LampBehavior lamp;
 
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
         stats = GetComponent<CharacterStats>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        dialogueManager = FindObjectOfType<DialogueManager>();
         currentState = PlayerState.walk;
     }
 
@@ -116,6 +119,18 @@ public class PlayerController : MonoBehaviour
         {
             lamp.Rest();
         }
+
+        if (dialog != null)
+        {
+            if (dialogueManager.animator.GetBool("isOpen"))
+            {
+                dialog.NextDialogue();
+            }
+            else
+            {
+                dialog.TriggerDialogue();
+            }
+        }
     }
 
     private void Attack (InputAction.CallbackContext context)
@@ -177,6 +192,11 @@ public class PlayerController : MonoBehaviour
         {
             lamp = other.gameObject.GetComponent<LampBehavior>();
         }
+
+        if (other.gameObject.CompareTag("NPC"))
+        {
+            dialog = other.gameObject.GetComponent<DialogueTrigger>();
+        }
     }
 
     private void OnTriggerExit2D (Collider2D other)
@@ -191,6 +211,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Lamp"))
         {
             lamp = null;
+        }
+
+        if (other.gameObject.CompareTag("NPC"))
+        {
+            dialog = null;
         }
     }
 }

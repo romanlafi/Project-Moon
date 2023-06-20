@@ -16,7 +16,6 @@ public class RoomMove : MonoBehaviour
 
     private CameraMovement camera;
 
-    // Start is called before the first frame update
     void Start()
     {
         camera = Camera.main.GetComponent<CameraMovement>();

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 67a8f15f91261f54b9ea85ccf1b608e2
   - enabled: 1
+    path: Assets/Scenes/IosefkasClinic.unity
+    guid: afad90f3df632aa4ea29588bb09b4a85
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LampBehavior : MonoBehaviour
@@ -12,11 +10,14 @@ public class LampBehavior : MonoBehaviour
         levelLoader.RefreshLevel();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Player"))
         {
-            interactionButton.SetActive(true);
+            if (interactionButton != null)
+            {
+                interactionButton.SetActive(true);
+            }
         }
     }
 
