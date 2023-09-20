@@ -8,7 +8,8 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
 
     private AudioSource sentencesAudioSource;
-    private TMP_Text dialogText;
+    public TMP_Text dialogText;
+    public TMP_Text nameText;
 
     private Queue<string> sentencesText;
     private Queue<AudioClip> sentencesAudio;
@@ -16,7 +17,6 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        dialogText = GetComponentInChildren<TMP_Text>();
 
         sentencesText = new Queue<string>();
         sentencesAudio = new Queue<AudioClip>();
@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue (Dialog dialog)
     {
+        nameText.text = dialog.name;
+
         sentencesText.Clear();
         sentencesAudio.Clear();
 

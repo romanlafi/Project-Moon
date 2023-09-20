@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerState currentState;
 
+    public CharacterSounds characterSounds;
+
     private void Awake () 
     {
         playerControls = new PlayerInputActions();
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         stats = GetComponent<CharacterStats>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        characterSounds = GetComponent<CharacterSounds>();
 
         dialogueManager = FindObjectOfType<DialogueManager>();
         currentState = PlayerState.walk;
@@ -101,6 +105,8 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("moveX", moveDirection.x);
             animator.SetFloat("moveY", moveDirection.y);
             animator.SetBool("moving", true);
+
+            characterSounds.Walk();
         }
         else
         {
@@ -145,6 +151,7 @@ public class PlayerController : MonoBehaviour
     {
         ChangeState(PlayerState.attack);
         animator.SetBool("attacking", true);
+        characterSounds.Attack();
         yield return null;
         animator.SetBool("attacking", false);
         yield return new WaitForSeconds(.33f);
@@ -182,6 +189,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D (Collider2D other)
     {
         otherTransform = other.transform;
+        Debug.Log(otherTransform);
 
         if (other.gameObject.CompareTag("Sign"))
         {
